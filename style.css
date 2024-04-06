@@ -3,3 +3,22 @@ p {
   padding: 0;
   box-sizing: border-box;
 }
+
+body {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+h1 {
+  width: 50%;
+  text-align: center;
+}
+
+.board-container {
+  height: 300px;
+  width: 300px;
+  display: grid;
+  grid-template: repeat(3, 1fr) / repeat(3, 1fr);
+}
