@@ -31,10 +31,22 @@ function GameBoard() {
     return undefined;
   }
 
+  let cmarker = 'O';
+
+  let marker = () => {
+    if (cmarker == 'O') {
+      cmarker = 'X';
+    } else {
+      cmarker = 'O';
+    }
+    return cmarker;
+  }
+
   return {
     getBoard,
     markBoard,
-    checkBoard
+    checkBoard,
+    marker
   }
 }
 
@@ -44,7 +56,13 @@ const board = document.querySelector('.board-container');
 for (let i = 0; i < 3; i++) {
   for (let j = 0; j < 3; j++) {
     let cell = document.createElement('div');
-    cell.classList.add('.cell');
+    cell.classList.add('cell');
+
+    cell.addEventListener('click', () => {
+      gameboard.markBoard(i, j, gameboard.marker());
+      cell.textContent = gameboard.getBoard()[i][j];
+    });
+
     board.appendChild(cell);
   }
 }
