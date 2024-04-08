@@ -32,7 +32,6 @@ function GameBoard() {
   }
 
   let cmarker = 'O';
-
   let marker = () => {
     if (cmarker == 'O') {
       cmarker = 'X';
@@ -42,16 +41,35 @@ function GameBoard() {
     return cmarker;
   }
 
+  let reseter = () => {
+    for (let i = 0; i < 3; i++) {
+      for (let j = 0; j < 3; j++) {
+        board[i][j] = undefined;
+      }
+    }
+  };
+
   return {
     getBoard,
     markBoard,
     checkBoard,
-    marker
+    marker,
+    reseter
   }
 }
 
 const gameboard = GameBoard();
 const board = document.querySelector('.board-container');
+const winner = document.querySelector('dialog');
+const reset = document.getElementById('reset');
+reset.addEventListener('click', () => {
+  winner.close();
+  gameboard.reseter();
+  let cells = Array.from(document.querySelectorAll('.cell'));
+  for (let i = 0; i < cells.length; i++) {
+    cells[i].textContent = '';
+  }
+});
 
 for (let i = 0; i < 3; i++) {
   for (let j = 0; j < 3; j++) {
@@ -61,6 +79,9 @@ for (let i = 0; i < 3; i++) {
     cell.addEventListener('click', () => {
       gameboard.markBoard(i, j, gameboard.marker());
       cell.textContent = gameboard.getBoard()[i][j];
+      if (gameboard.checkBoard()) {
+        winner.showModal();
+      }
     });
 
     board.appendChild(cell);
