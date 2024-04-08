@@ -33,3 +33,13 @@ h1 {
   font-weight: 700;
   font-size: 3rem;
 }
+
+.dialog-container {
+  height: 100px;
+  width: 300px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+}

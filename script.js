@@ -42,6 +42,7 @@ function GameBoard() {
   }
 
   let reseter = () => {
+    cmarker = 'O';
     for (let i = 0; i < 3; i++) {
       for (let j = 0; j < 3; j++) {
         board[i][j] = undefined;
@@ -49,18 +50,32 @@ function GameBoard() {
     }
   };
 
+  let tieCheck = () => {
+    let num = 0;
+    for (let i = 0; i < 3; i++) {
+      for (let j = 0; j < 3; j++) {
+        if (board[i][j]) {
+          num++;
+        }
+      }
+    }
+    return num;
+  };
+
   return {
     getBoard,
     markBoard,
     checkBoard,
     marker,
-    reseter
+    reseter,
+    tieCheck
   }
 }
 
 const gameboard = GameBoard();
 const board = document.querySelector('.board-container');
 const winner = document.querySelector('dialog');
+const winnerText = document.querySelector('.winner');
 const reset = document.getElementById('reset');
 reset.addEventListener('click', () => {
   winner.close();
@@ -80,6 +95,10 @@ for (let i = 0; i < 3; i++) {
       gameboard.markBoard(i, j, gameboard.marker());
       cell.textContent = gameboard.getBoard()[i][j];
       if (gameboard.checkBoard()) {
+        winnerText.textContent = `Winner: ${gameboard.checkBoard()} `;
+        winner.showModal();
+      } else if (gameboard.tieCheck() == 9) {
+        winnerText.textContent = "Its a DRAW!!";
         winner.showModal();
       }
     });
